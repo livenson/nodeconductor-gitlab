@@ -15,6 +15,10 @@ class GitLabService(structure_models.Service):
         verbose_name = 'GitLab service'
         verbose_name_plural = 'GitLab services'
 
+    @classmethod
+    def get_url_name(cls):
+        return 'gitlab'
+
 
 class GitLabServiceProjectLink(structure_models.ServiceProjectLink):
     service = models.ForeignKey(GitLabService)
@@ -22,6 +26,10 @@ class GitLabServiceProjectLink(structure_models.ServiceProjectLink):
     class Meta(structure_models.ServiceProjectLink.Meta):
         verbose_name = 'GitLab service project link'
         verbose_name_plural = 'GitLab service project links'
+
+    @classmethod
+    def get_url_name(cls):
+        return 'gitlab-spl'
 
 
 class GitLabResource(structure_models.Resource, core_models.SerializableAbstractMixin):
@@ -46,6 +54,10 @@ class Group(GitLabResource):
     # a generic URL for access to the resource
     def get_access_url(self):
         return self.web_url
+
+    @classmethod
+    def get_url_name(cls):
+        return 'gitlab-group'
 
 
 class Project(quotas_models.QuotaModelMixin, GitLabResource):
@@ -77,3 +89,7 @@ class Project(quotas_models.QuotaModelMixin, GitLabResource):
     # a generic URL for access to the resource
     def get_access_url(self):
         return self.web_url
+
+    @classmethod
+    def get_url_name(cls):
+        return 'gitlab-project'
