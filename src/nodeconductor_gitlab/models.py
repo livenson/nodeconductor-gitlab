@@ -4,6 +4,8 @@ from django.db import models
 
 from nodeconductor.core import models as core_models
 from nodeconductor.quotas import models as quotas_models
+from nodeconductor.quotas.fields import CounterQuotaField
+from nodeconductor.quotas.models import QuotaModelMixin
 from nodeconductor.structure import models as structure_models
 
 
@@ -18,6 +20,17 @@ class GitLabService(structure_models.Service):
     @classmethod
     def get_url_name(cls):
         return 'gitlab'
+
+    class Quotas(QuotaModelMixin.Quotas):
+        group_count = CounterQuotaField(
+            target_models=lambda: [Group],
+            path_to_scope='service_project_link.service',
+        )
+
+        project_count = CounterQuotaField(
+            target_models=lambda: [Project],
+            path_to_scope='service_project_link.service'
+        )
 
 
 class GitLabServiceProjectLink(structure_models.ServiceProjectLink):
