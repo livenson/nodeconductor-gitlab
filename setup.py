@@ -15,7 +15,7 @@ tests_require = [
 ]
 
 install_requires = [
-    'nodeconductor>=0.102.2',
+    'nodeconductor>=0.107.0',
     'python-gitlab>=0.9',
 ]
 
